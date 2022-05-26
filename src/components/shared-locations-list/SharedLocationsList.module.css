@@ -1,0 +1,11 @@
+.location-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+}
+
+.location-list li :hover,
+.location-list li :active {
+  background-color: #4d1601;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}

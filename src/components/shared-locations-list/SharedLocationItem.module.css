@@ -1,0 +1,33 @@
+.location-list-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+
+  align-items: center;
+  justify-items: center;
+
+  border: 1px solid #2c0d00;
+  border-radius: 25px;
+
+  cursor: pointer;
+  width: 100%;
+  background-color: #8a2b06;
+}
+
+.location-list-item__name {
+  grid-column: 1/-1;
+}
+
+.location-list-item__type {
+  text-align: center;
+}
+
+.location-list-item__logo {
+  display: inline-block;
+
+  width: 2rem;
+
+  /* height: 2rem; */
+  margin: 0 auto;
+  padding: auto;
+}
