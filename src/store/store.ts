@@ -4,6 +4,7 @@ import modalReducer from './slices/modalPanelSlice';
 import sharedLocationsReducer from './slices/SharedLocationSlice';
 import sidebarReducer from './slices/ShowSidebarSlice';
 import formReducer from './slices/ShareLocationFormSlice';
+import inputValidityReducer from './slices/InputValiditySlice';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     sharedLocations: sharedLocationsReducer,
     sidebar: sidebarReducer,
     form: formReducer,
+    input: inputValidityReducer,
   },
 });
 

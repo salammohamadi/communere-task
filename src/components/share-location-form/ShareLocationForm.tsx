@@ -1,9 +1,10 @@
 import React, { FormEvent, useState } from 'react';
+
 import { useAppSelector } from '../../store/app/hooks';
+import { useDispatch } from 'react-redux';
 
 import LeafletMap from '../leaflet-map/LeafletMap';
 
-import { useDispatch } from 'react-redux';
 import { toggleModal } from '../../store/slices/modalPanelSlice';
 
 import {
@@ -12,22 +13,27 @@ import {
 } from '../../store/slices/SharedLocationSlice';
 
 import {
-  focusInput,
-  blurInput,
-  validInput,
-  unValidInput,
-  resetFormValidity,
-} from '../../store/slices/ShareLocationFormSlice';
+  inputIsFocused,
+  inputIsBlurred,
+  inputIsTouched,
+  inputReset,
+} from '../../store/slices/InputValiditySlice';
 
 import classes from './shareLocationForm.module.css';
 
 const ShareLocation: React.FC = () => {
-  const [formIsValid, setFormIsValid] = useState(false);
-  const [inputIsEmpty, setInputIsEmpty] = useState(true);
+  const [locationNameInputValue, setLocationNameInputValue] = useState('');
+  const [locationNameInputIsEmpty, setLocationNameInputIsEmpty] =
+    useState(true);
 
   const ShareLocationPosition = useAppSelector(state => state.leaflet);
-  const inputIsFocused = useAppSelector(state => state.form.inputIsFocused);
-  const inputIsValid = useAppSelector(state => state.form.inputIsValid);
+
+  const locationNameInputIsTouched = useAppSelector(
+    state => state.input.inputIsTouched
+  );
+  const locationNameInputIsFocused = useAppSelector(
+    state => state.input.inputIsFocused
+  );
   const editButtonIsClicked = useAppSelector(
     state => state.form.editButtonClicked
   );
@@ -38,25 +44,28 @@ const ShareLocation: React.FC = () => {
   const locationTypeRef = React.useRef<HTMLSelectElement>(null);
 
   const locationNameInputFocusHandler = () => {
-    dispatch(focusInput());
-    setFormIsValid(inputIsValid || !inputIsFocused);
+    dispatch(inputIsFocused());
+    dispatch(inputIsTouched());
   };
 
   const locationNameInputBlurHandler = () => {
-    dispatch(blurInput());
-    setFormIsValid(inputIsValid || !inputIsFocused);
+    dispatch(inputIsBlurred());
   };
 
-  const locationNameInputKeyChangeHandler = (
+  const locationNameInputChangeHandler = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    if (e.target.value.trim().length === 0) setInputIsEmpty(true);
-    dispatch(validInput());
+    if (e.target.value.trim().length !== 0) {
+      setLocationNameInputIsEmpty(false);
+    }
+    if (e.target.value.trim().length === 0) setLocationNameInputIsEmpty(true);
+
+    setLocationNameInputValue(e.target.value);
   };
 
   const cancelButtonClickHandler = (event: React.MouseEvent<HTMLElement>) => {
     dispatch(toggleModal());
-    dispatch(resetFormValidity());
+    dispatch(inputReset());
   };
 
   const logoUploadHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -69,16 +78,6 @@ const ShareLocation: React.FC = () => {
 
     const locationType = locationTypeRef.current?.value as string;
     const locationName = locationNameRef.current?.value as string;
-
-    if (locationName.trim().length === 0) {
-      setFormIsValid(inputIsValid || !inputIsFocused);
-      dispatch(unValidInput());
-      return;
-    }
-    if (locationName.trim().length > 0) {
-      setFormIsValid(inputIsValid || !inputIsFocused);
-      dispatch(validInput());
-    }
 
     dispatch(resetClickedLocation());
     dispatch(
@@ -96,7 +95,11 @@ const ShareLocation: React.FC = () => {
       })
     );
     dispatch(toggleModal());
+    dispatch(inputReset());
   };
+
+  const locationNameInputIsValid =
+    locationNameInputIsFocused || !locationNameInputIsEmpty;
 
   return (
     <div className={classes.panel}>
@@ -113,10 +116,14 @@ const ShareLocation: React.FC = () => {
             ref={locationNameRef}
             onFocus={locationNameInputFocusHandler}
             onBlur={locationNameInputBlurHandler}
-            onChange={locationNameInputKeyChangeHandler}
+            onChange={locationNameInputChangeHandler}
+            value={locationNameInputValue}
             required
             style={{
-              border: formIsValid && !inputIsEmpty ? '' : '2px solid red',
+              border:
+                !locationNameInputIsTouched || locationNameInputIsValid
+                  ? ' '
+                  : '2px solid red',
             }}
           />
           <label htmlFor='location-on-map'>Location on Map:</label>
