@@ -92,7 +92,11 @@ const LeafletMap: React.FC<LeafletMapProps> = props => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url='https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png'
       />
-      <Marker position={[coords.latitude, coords.longitude]} icon={newMarker}>
+      <Marker
+        position={[coords.latitude, coords.longitude]}
+        icon={newMarker}
+        draggable
+      >
         <Popup className='popup'>
           <header className='popup-header'>Location Details</header>
           {SharedLocations.map(
