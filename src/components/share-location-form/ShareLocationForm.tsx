@@ -21,7 +21,7 @@ import {
 
 import classes from './shareLocationForm.module.css';
 
-const ShareLocation: React.FC = () => {
+const ShareLocationForm: React.FC = () => {
   const [locationNameInputValue, setLocationNameInputValue] = useState('');
   const [locationNameInputIsEmpty, setLocationNameInputIsEmpty] =
     useState(true);
@@ -198,4 +198,4 @@ const ShareLocation: React.FC = () => {
   );
 };
 
-export default ShareLocation;
+export default ShareLocationForm;

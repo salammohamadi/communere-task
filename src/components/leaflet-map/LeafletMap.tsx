@@ -36,10 +36,7 @@ interface LeafletMapProps {
 
 const LeafletMap: React.FC<LeafletMapProps> = props => {
   const popupIsOpen = useAppSelector(state => state.leaflet.popupIsOpen);
-  console.log(popupIsOpen);
-
   const coords = useAppSelector(state => state.leaflet);
-
   const dispatch = useDispatch();
 
   function ViewPositionOnMap() {
@@ -78,7 +75,11 @@ const LeafletMap: React.FC<LeafletMapProps> = props => {
       ></Marker>
       <Popup position={[coords.latitude, coords.longitude]}>
         {popupIsOpen && <PopupContent />}
-        {!popupIsOpen && <p>Click on Marker to see location's Information</p>}
+        {!popupIsOpen && (
+          <p className='popup-instruction'>
+            Click on Marker to see location's Information
+          </p>
+        )}
       </Popup>
 
       {/* FIXME */}

@@ -4,3 +4,15 @@
   width: 100%;
   z-index: 1;
 }
+
+.popup-instruction {
+  background-color: #b2f2bb;
+  border-radius: 5px;
+
+  width: 100%;
+  padding: 1rem;
+
+  color: #0ca678;
+  font-weight: 700;
+  font-size: 1rem;
+}
