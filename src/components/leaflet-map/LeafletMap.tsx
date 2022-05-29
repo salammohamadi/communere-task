@@ -39,15 +39,16 @@ const LeafletMap: React.FC<LeafletMapProps> = props => {
   const coords = useAppSelector(state => state.leaflet);
   const dispatch = useDispatch();
 
-  function ViewPositionOnMap() {
+  function ClickOnMap() {
     const map = useMap();
-    map.setView([coords.latitude, coords.longitude], props.panel ? 15 : 30);
+    map?.setView([coords.latitude, coords.longitude], props.panel ? 15 : 30);
 
-    const updateMap = useMapEvent('click', e => {
+    useMapEvent('click', e => {
       const latLang = e.latlng;
+      console.log(latLang);
       dispatch(locatePosition(latLang));
       dispatch(toggleModal());
-      updateMap.setView([latLang.lat, latLang.lng], 15);
+      map.setView([latLang.lat, latLang.lng], 15);
     });
 
     return null;
@@ -63,7 +64,6 @@ const LeafletMap: React.FC<LeafletMapProps> = props => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url='https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png'
       />
-
       <Marker
         position={[coords.latitude, coords.longitude]}
         icon={newMarker}
@@ -72,7 +72,7 @@ const LeafletMap: React.FC<LeafletMapProps> = props => {
             dispatch(togglePopup());
           },
         }}
-      ></Marker>
+      />
       <Popup position={[coords.latitude, coords.longitude]}>
         {popupIsOpen && <PopupContent />}
         {!popupIsOpen && (
@@ -91,10 +91,11 @@ const LeafletMap: React.FC<LeafletMapProps> = props => {
             location.locationLatLang.lat,
             location.locationLatLang.lng,
           ]}
+          key={v4()}
           icon={newMarker}
-          ></Marker>
-        ))} */}
-      <ViewPositionOnMap />
+        ></Marker>
+      ))} */}
+      <ClickOnMap />
     </MapContainer>
   );
 };

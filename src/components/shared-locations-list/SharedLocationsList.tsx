@@ -2,6 +2,8 @@ import React from 'react';
 
 import { useAppSelector } from '../../store/app/hooks';
 
+import { v4 } from 'uuid';
+
 import SharedLocationItem from './SharedLocationItem';
 
 import classes from './SharedLocationsList.module.css';
@@ -13,11 +15,7 @@ const SharedLocationsList: React.FC = () => {
     <React.Fragment>
       <ul className={classes['location-list']}>
         {sharedLocations.map(location => (
-          <li
-            key={location.id}
-            className='location-list-item'
-            data-id={location.id}
-          >
+          <li key={v4()} className='location-list-item' data-id={v4()}>
             <SharedLocationItem
               locationName={location.locationName}
               locationType={location.locationType}
