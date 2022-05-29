@@ -1,5 +1,7 @@
 import React, { FormEvent, useState } from 'react';
 
+import uploadButton from '../../assets/ions/upload.svg';
+
 import { useAppSelector } from '../../store/app/hooks';
 import { useDispatch } from 'react-redux';
 
@@ -160,6 +162,7 @@ const ShareLocationForm: React.FC = () => {
                 FIXME
                 Logo is hard coded
              */}
+
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 className='h-5 w-5'

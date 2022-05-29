@@ -1,10 +1,10 @@
 import React from 'react';
 
-import classes from './Header.module.css';
-
 import { useDispatch } from 'react-redux';
 import { locatePosition } from '../../store/slices/leafletMapSlice';
 import { resetClickedLocation } from '../../store/slices/SharedLocationSlice';
+
+import classes from './Header.module.css';
 
 const CurrentLocationButton: React.FC = () => {
   const dispatch = useDispatch();
