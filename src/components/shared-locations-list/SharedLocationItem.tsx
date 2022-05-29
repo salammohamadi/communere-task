@@ -26,8 +26,6 @@ const SharedLocationItem: React.FC<SharedLocationProps> = props => {
   const locationListItemClickHandler = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
-    event.preventDefault();
-
     const locationId = Number(
       event.currentTarget
         .closest('.location-list-item')
@@ -37,6 +35,8 @@ const SharedLocationItem: React.FC<SharedLocationProps> = props => {
     const [clickedLocation] = sharedLocations.filter(
       location => location.id === locationId
     );
+
+    console.log(clickedLocation.locationLatLang);
 
     dispatch(locatePosition(clickedLocation.locationLatLang));
     dispatch(resetClickedLocation());

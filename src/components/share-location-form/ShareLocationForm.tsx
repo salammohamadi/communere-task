@@ -27,7 +27,6 @@ const ShareLocation: React.FC = () => {
     useState(true);
 
   const ShareLocationPosition = useAppSelector(state => state.leaflet);
-
   const locationNameInputIsTouched = useAppSelector(
     state => state.input.inputIsTouched
   );
@@ -78,6 +77,8 @@ const ShareLocation: React.FC = () => {
 
     const locationType = locationTypeRef.current?.value as string;
     const locationName = locationNameRef.current?.value as string;
+
+    if (locationName.trim().length === 0) return;
 
     dispatch(resetClickedLocation());
     dispatch(
@@ -178,14 +179,14 @@ const ShareLocation: React.FC = () => {
         </fieldset>
       </form>
       <div className={classes['form-buttons']}>
-        {editButtonIsClicked || (
-          <button
-            className={`${classes.button} ${classes.cancel}`}
-            onClick={cancelButtonClickHandler}
-          >
-            Cancel
-          </button>
-        )}
+        <button
+          className={`${classes.button} ${classes.cancel}`}
+          onClick={cancelButtonClickHandler}
+          disabled={editButtonIsClicked}
+        >
+          Cancel
+        </button>
+
         <button
           className={`${classes.button} ${classes.save}`}
           onClick={shareLocationFormHandler}

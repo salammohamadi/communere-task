@@ -69,6 +69,11 @@ select {
   overflow: hidden;
 }
 
+.location-on-map:first-child {
+  transform: translateY(100rem);
+  /* transform: translateX(-0.1rem); */
+}
+
 svg {
   height: 1.5rem;
 }

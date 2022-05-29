@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 
 import { useAppSelector } from '../../store/app/hooks';
 import { useDispatch } from 'react-redux';
 
-import { Icon } from 'leaflet';
+import { editSharedLocation } from '../../store/slices/SharedLocationSlice';
+import { toggleCancelButton } from '../../store/slices/ShareLocationFormSlice';
+import { toggleModal } from '../../store/slices/modalPanelSlice';
+
+import communereLogo from '../../assets/logos/communereLogo.svg';
+
+import { Icon, popup, LeafletEvent, LeafletMouseEventHandlerFn } from 'leaflet';
 
 import {
   MapContainer,
@@ -16,13 +22,8 @@ import {
 } from 'react-leaflet';
 
 import { locatePosition } from '../../store/slices/leafletMapSlice';
-import { toggleModal } from '../../store/slices/modalPanelSlice';
-import { editSharedLocation } from '../../store/slices/SharedLocationSlice';
-
-import communereLogo from '../../assets/logos/communereLogo.svg';
 
 import './leaflet.css';
-import { toggleCancelButton } from '../../store/slices/ShareLocationFormSlice';
 
 const newMarker = new Icon({
   iconUrl: 'https://unpkg.com/leaflet@1.8.0/dist/images/marker-icon-2x.png',
@@ -34,8 +35,11 @@ interface LeafletMapProps {
 }
 
 const LeafletMap: React.FC<LeafletMapProps> = props => {
-  const coords = useAppSelector(state => state.leaflet);
+  const [popupIsOpen, setPopupIsOpen] = useState(false);
   const SharedLocations = useAppSelector(state => state.sharedLocations);
+  const coords = useAppSelector(state => state.leaflet);
+
+  const popupRef = useRef(null);
 
   const dispatch = useDispatch();
 
@@ -49,14 +53,17 @@ const LeafletMap: React.FC<LeafletMapProps> = props => {
       dispatch(toggleModal());
       updateMap.setView([latLang.lat, latLang.lng], 15);
     });
+
     return null;
   }
 
-  const popupCloseClickHandler = () => {
+  const popupCloseClickHandler = (e: React.MouseEvent) => {
     /*
-    BUG
-    Add Popup close event 
+    FIXME
+    Feels like a workaround
     */
+
+    setPopupIsOpen(prevState => !prevState);
   };
 
   const popupEditClickHandler = (
@@ -78,6 +85,7 @@ const LeafletMap: React.FC<LeafletMapProps> = props => {
     Just a workaround for canceling edit event
     instead get location information in modal panel when editing
     */
+
     dispatch(toggleCancelButton());
     dispatch(toggleModal());
   };
@@ -96,8 +104,24 @@ const LeafletMap: React.FC<LeafletMapProps> = props => {
         position={[coords.latitude, coords.longitude]}
         icon={newMarker}
         draggable
-      >
-        <Popup className='popup'>
+        eventHandlers={{
+          click: () => {
+            setPopupIsOpen(prevState => !prevState);
+          },
+        }}
+      />
+      {popupIsOpen && (
+        <Popup
+          className='popup'
+          closeButton={false}
+          ref={popupRef}
+          position={[coords.latitude, coords.longitude]}
+          eventHandlers={{
+            click: e => {
+              setPopupIsOpen(prevState => !prevState);
+            },
+          }}
+        >
           <header className='popup-header'>Location Details</header>
           {SharedLocations.map(
             location =>
@@ -120,17 +144,16 @@ const LeafletMap: React.FC<LeafletMapProps> = props => {
                 </div>
               )
           )}
-
           <button className='close-popup btn' onClick={popupCloseClickHandler}>
             Close
           </button>
-
           <button className='edit-popup btn' onClick={popupEditClickHandler}>
             Edit
           </button>
         </Popup>
-        <Tooltip>Click on Marker to see location's Information</Tooltip>
-      </Marker>
+      )}
+
+      <Tooltip>Click on Marker to see location's Information</Tooltip>
 
       {/* FIXME */}
       {/* Surviving Reload with saving
@@ -142,8 +165,8 @@ const LeafletMap: React.FC<LeafletMapProps> = props => {
             location.locationLatLang.lng,
           ]}
           icon={newMarker}
-        ></Marker>
-      ))} */}
+          ></Marker>
+        ))} */}
       <ViewPositionOnMap />
     </MapContainer>
   );
