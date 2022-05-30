@@ -3,6 +3,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { locatePosition } from '../../store/slices/leafletMapSlice';
 import { resetClickedLocation } from '../../store/slices/SharedLocationSlice';
+import { sharedLocationSaved } from '../../store/slices/ShareLocationFormSlice';
 
 import classes from './Header.module.css';
 
@@ -21,8 +22,12 @@ const CurrentLocationButton: React.FC = () => {
         const { longitude = 46.9964 } = position.coords;
         dispatch(locatePosition({ lat: latitude, lng: longitude }));
         dispatch(resetClickedLocation());
+        dispatch(sharedLocationSaved());
       },
       () => {
+        // BUG
+        // Just a workaround.
+        dispatch(sharedLocationSaved());
         dispatch(locatePosition(SanandajCoords));
         dispatch(resetClickedLocation());
 
