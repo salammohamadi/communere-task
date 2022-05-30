@@ -6,39 +6,27 @@ import { useDispatch } from 'react-redux';
 import LeafletMap from '../leaflet-map/LeafletMap';
 
 import { toggleModal } from '../../store/slices/modalPanelSlice';
-
 import {
   addNewSharedLocation,
   resetClickedLocation,
-  sharedLocationClicked,
 } from '../../store/slices/SharedLocationSlice';
 
 import classes from './shareLocationForm.module.css';
 import { v4 } from 'uuid';
-import { retrieveData } from '../../store/slices/retrieveFormDataSlice';
 import { sharedLocationSaved } from '../../store/slices/ShareLocationFormSlice';
 
 const ShareLocationForm: React.FC = () => {
-  // const selectedLocationToEditInfo = useAppSelector(
-  //   state => state.selectedLocation
-  // );
-
   const ShareLocationPosition = useAppSelector(state => state.leaflet);
 
   const [locationNameInputValue, setLocationNameInputValue] = useState('');
   const [locationTypeInputValue, setLocationTypeInputValue] =
     useState('Business');
-
   const [locationNameInputIsEmpty, setLocationNameInputIsEmpty] =
     useState(true);
   const [locationNameInputIsTouched, setLocationNameInputIsTouched] =
     useState(false);
   const [locationNameInputIsFocused, setLocationNameInputIsFocused] =
     useState(false);
-
-  const editButtonIsClicked = useAppSelector(
-    state => state.form.editButtonClicked
-  );
 
   const dispatch = useDispatch();
 
@@ -76,18 +64,6 @@ const ShareLocationForm: React.FC = () => {
   };
 
   const cancelButtonClickHandler = (event: React.MouseEvent<HTMLElement>) => {
-    // editButtonIsClicked &&
-    //   dispatch(
-    //     retrieveData({
-    //       locationClicked: false,
-    //       locationName: '',
-    //       locationType: '',
-    //       locationLogo: '',
-    //       locationLat: 0,
-    //       locationLng: 0,
-    //       locationId: 0,
-    //     })
-    //   );
     dispatch(toggleModal());
   };
 

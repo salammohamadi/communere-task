@@ -100,6 +100,7 @@ const LeafletMap: React.FC<LeafletMapProps> = props => {
           icon={newMarker}
         ></Marker>
       ))} */}
+
       <ClickOnMap />
     </MapContainer>
   );

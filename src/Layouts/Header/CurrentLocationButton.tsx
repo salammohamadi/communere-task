@@ -12,11 +12,8 @@ const CurrentLocationButton: React.FC = () => {
   const CurrentLocationButtonHandler = () => {
     const SanandajCoords = { lat: 35.3119, lng: 46.9964 };
 
-    dispatch(locatePosition(SanandajCoords));
-    dispatch(resetClickedLocation());
-
     // FIXME
-    // does not get geolocation API
+    // does not getting geolocation API !!
 
     navigator.geolocation.getCurrentPosition(
       position => {
@@ -26,6 +23,9 @@ const CurrentLocationButton: React.FC = () => {
         dispatch(resetClickedLocation());
       },
       () => {
+        dispatch(locatePosition(SanandajCoords));
+        dispatch(resetClickedLocation());
+
         console.log('Could not get your position');
       }
     );

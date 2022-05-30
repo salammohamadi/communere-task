@@ -1,13 +1,6 @@
 import { useAppSelector } from '../../store/app/hooks';
 import { useDispatch } from 'react-redux';
 
-// import {
-//   addNewSharedLocation,
-//   deleteSharedLocation,
-//   resetClickedLocation,
-//   sharedLocationClicked,
-// } from '../../store/slices/SharedLocationSlice';
-
 import { toggleModal } from '../../store/slices/modalPanelSlice';
 import { retrieveData } from '../../store/slices/retrieveFormDataSlice';
 import { togglePopup } from '../../store/slices/leafletMapSlice';
