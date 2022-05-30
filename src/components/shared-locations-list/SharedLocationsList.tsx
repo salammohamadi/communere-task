@@ -15,7 +15,7 @@ const SharedLocationsList: React.FC = () => {
     <React.Fragment>
       <ul className={classes['location-list']}>
         {sharedLocations.map(location => (
-          <li key={v4()} className='location-list-item' data-id={v4()}>
+          <li key={v4()} className='location-list-item' data-id={location.id}>
             <SharedLocationItem
               locationName={location.locationName}
               locationType={location.locationType}

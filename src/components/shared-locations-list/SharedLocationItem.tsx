@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { useAppSelector } from '../../store/app/hooks';
 
-import { locatePosition } from '../../store/slices/leafletMapSlice';
+import { locatePosition, openPopup } from '../../store/slices/leafletMapSlice';
 import {
   resetClickedLocation,
   sharedLocationClicked,
@@ -16,31 +16,29 @@ import classes from './SharedLocationItem.module.css';
 interface SharedLocationProps {
   locationName: string;
   locationType: string;
-  id: number;
+  id: string;
 }
 
 const SharedLocationItem: React.FC<SharedLocationProps> = props => {
   const sharedLocations = useAppSelector(state => state.sharedLocations);
+  console.log(sharedLocations);
   const dispatch = useDispatch();
 
   const locationListItemClickHandler = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
-    const locationId = Number(
-      event.currentTarget
-        .closest('.location-list-item')
-        ?.getAttribute('data-id')
-    );
+    const locationId = event.currentTarget
+      .closest('.location-list-item')
+      ?.getAttribute('data-id');
 
     const [clickedLocation] = sharedLocations.filter(
       location => location.id === locationId
     );
 
-    console.log(clickedLocation.locationLatLang);
-
     dispatch(locatePosition(clickedLocation.locationLatLang));
     dispatch(resetClickedLocation());
     dispatch(sharedLocationClicked(clickedLocation.id));
+    dispatch(openPopup());
   };
 
   return (

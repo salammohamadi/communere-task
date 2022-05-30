@@ -5,6 +5,7 @@ import sharedLocationsReducer from './slices/SharedLocationSlice';
 import sidebarReducer from './slices/ShowSidebarSlice';
 import formReducer from './slices/ShareLocationFormSlice';
 import inputValidityReducer from './slices/InputValiditySlice';
+import editSharedLocation from './slices/retrieveFormDataSlice';
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     sidebar: sidebarReducer,
     form: formReducer,
     input: inputValidityReducer,
+    selectedLocation: editSharedLocation,
   },
 });
 

@@ -45,7 +45,6 @@ const LeafletMap: React.FC<LeafletMapProps> = props => {
 
     useMapEvent('click', e => {
       const latLang = e.latlng;
-      console.log(latLang);
       dispatch(locatePosition(latLang));
       dispatch(toggleModal());
       map.setView([latLang.lat, latLang.lng], 15);

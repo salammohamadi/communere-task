@@ -24,9 +24,14 @@ export const leafletMapSlice = createSlice({
     togglePopup: state => {
       state.popupIsOpen = !state.popupIsOpen;
     },
+
+    openPopup: state => {
+      state.popupIsOpen = true;
+    },
   },
 });
 
-export const { locatePosition, togglePopup } = leafletMapSlice.actions;
+export const { locatePosition, togglePopup, openPopup } =
+  leafletMapSlice.actions;
 
 export default leafletMapSlice.reducer;
