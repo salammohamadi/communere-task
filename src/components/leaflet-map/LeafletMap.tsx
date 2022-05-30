@@ -66,20 +66,24 @@ const LeafletMap: React.FC<LeafletMapProps> = props => {
       <Marker
         position={[coords.latitude, coords.longitude]}
         icon={newMarker}
+        draggable={!props.panel}
         eventHandlers={{
           click: () => {
             dispatch(togglePopup());
           },
         }}
       />
-      <Popup position={[coords.latitude, coords.longitude]}>
-        {popupIsOpen && <PopupContent />}
-        {!popupIsOpen && (
-          <p className='popup-instruction'>
-            Click on Marker to see location's Information
-          </p>
-        )}
-      </Popup>
+
+      {props.panel && (
+        <Popup position={[coords.latitude, coords.longitude]}>
+          {popupIsOpen && <PopupContent />}
+          {!popupIsOpen && (
+            <p className='popup-instruction'>
+              Click on Marker to see location's Information
+            </p>
+          )}
+        </Popup>
+      )}
 
       {/* FIXME */}
       {/* Surviving Reload with saving
