@@ -80,6 +80,7 @@ const ShareLocationForm: React.FC = () => {
 
   const cancelButtonClickHandler = (event: React.MouseEvent<HTMLElement>) => {
     dispatch(toggleModal());
+    dispatch(resetClickedLocation());
     dispatch(inputReset());
   };
 
