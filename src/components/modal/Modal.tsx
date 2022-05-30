@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import ShareLocation from '../share-location-form/ShareLocationForm';
 
 import { toggleModal } from '../../store/slices/modalPanelSlice';
-import { inputReset } from '../../store/slices/InputValiditySlice';
+import { resetInitialInput } from '../../store/slices/InitialInputSlice';
 
 import classes from './modal.module.css';
 
@@ -18,7 +18,7 @@ const Modal: React.FC = () => {
   );
 
   const backdropClickHandler = (event: React.MouseEvent<HTMLElement>) => {
-    dispatch(inputReset());
+    dispatch(resetInitialInput());
     !editButtonClicked && dispatch(toggleModal());
   };
 

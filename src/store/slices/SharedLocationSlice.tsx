@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { v4 } from 'uuid';
 
 export interface SharedLocation {
+  locationSaved: boolean;
   locationClicked: boolean;
   locationName: string;
   locationLatLang: { lat: number; lng: number };
@@ -12,6 +13,7 @@ export interface SharedLocation {
 
 const initialState: SharedLocation[] = [
   {
+    locationSaved: true,
     locationClicked: true,
     locationName: 'Communere',
     locationLatLang: { lat: 51.2398657, lng: -0.612081 },

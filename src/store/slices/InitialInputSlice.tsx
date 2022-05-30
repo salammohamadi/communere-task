@@ -12,20 +12,11 @@ const initialState: Input = {
   inputIsTouched: false,
 };
 
-export const InputValidity = createSlice({
+export const InitialInputSlice = createSlice({
   name: 'inputValidation',
   initialState,
   reducers: {
-    inputIsFocused: state => {
-      state.inputIsFocused = true;
-    },
-    inputIsBlurred: state => {
-      state.inputIsFocused = false;
-    },
-    inputIsTouched: state => {
-      state.inputIsTouched = true;
-    },
-    inputReset: state => {
+    resetInitialInput: state => {
       state.inputValue = '';
       state.inputIsFocused = false;
       state.inputIsTouched = false;
@@ -33,7 +24,6 @@ export const InputValidity = createSlice({
   },
 });
 
-export const { inputIsFocused, inputIsBlurred, inputIsTouched, inputReset } =
-  InputValidity.actions;
+export const { resetInitialInput } = InitialInputSlice.actions;
 
-export default InputValidity.reducer;
+export default InitialInputSlice.reducer;

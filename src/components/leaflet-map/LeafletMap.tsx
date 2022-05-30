@@ -24,6 +24,7 @@ import {
 } from '../../store/slices/leafletMapSlice';
 
 import './leaflet.css';
+import { sharedLocationSaved } from '../../store/slices/ShareLocationFormSlice';
 
 const newMarker = new Icon({
   iconUrl: 'https://unpkg.com/leaflet@1.8.0/dist/images/marker-icon-2x.png',
@@ -45,6 +46,7 @@ const LeafletMap: React.FC<LeafletMapProps> = props => {
 
     useMapEvent('click', e => {
       const latLang = e.latlng;
+      dispatch(sharedLocationSaved());
       dispatch(locatePosition(latLang));
       dispatch(toggleModal());
       map.setView([latLang.lat, latLang.lng], 15);

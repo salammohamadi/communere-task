@@ -2,22 +2,28 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export interface ShareLocationForm {
   editButtonClicked: boolean;
+  sharedLocationSaved: boolean;
 }
 
 const initialState: ShareLocationForm = {
   editButtonClicked: false,
+  sharedLocationSaved: true,
 };
 
 export const editButtonIsClicked = createSlice({
-  name: 'validation',
+  name: 'form',
   initialState,
   reducers: {
-    toggleCancelButton: state => {
+    toggleEditButtonClicked: state => {
       state.editButtonClicked = !state.editButtonClicked;
+    },
+    sharedLocationSaved: state => {
+      state.sharedLocationSaved = !state.sharedLocationSaved;
     },
   },
 });
 
-export const { toggleCancelButton } = editButtonIsClicked.actions;
+export const { toggleEditButtonClicked, sharedLocationSaved } =
+  editButtonIsClicked.actions;
 
 export default editButtonIsClicked.reducer;

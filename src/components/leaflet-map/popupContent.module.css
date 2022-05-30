@@ -1,6 +1,3 @@
-.leaflet-popup-content-wrapper {
-}
-
 .location-popup-container {
   margin: 0 auto;
 
@@ -46,6 +43,25 @@
   border-radius: 25px;
 
   cursor: pointer;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.add-popup-location {
+  grid-column: 1/-1;
+
+  width: 100%;
+  /* height: 10rem; */
+
+  justify-self: center;
+  text-align: center;
+
+  padding: 1rem;
+
+  border: 1px solid #2c0d00;
+  background-color: #8a2b06;
+  border-radius: 25px;
+
   font-size: 1.5rem;
   color: white;
 }
