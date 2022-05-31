@@ -1,36 +1,52 @@
-import menuCurrentLocationButton from '../../assets/ions/location.svg';
+import React, { useEffect } from 'react';
 
 import { useDispatch } from 'react-redux';
 
 import { locatePosition } from '../../store/slices/leafletMapSlice';
+import { resetClickedLocation } from '../../store/slices/SharedLocationSlice';
+import { saveSharedLocation } from '../../store/slices/ShareLocationFormSlice';
+
+import menuCurrentLocationButton from '../../assets/ions/location.svg';
 
 import classes from './menuButton.module.css';
 
-const CurrentLocationMenuButton = () => {
+const CurrentLocationMenuButton: React.FC = () => {
   const dispatch = useDispatch();
 
-  const menuCurrentLocationButtonClickHandler = () => {
-    const coords = { lat: 35.3119, lng: 46.9964 };
-    dispatch(locatePosition(coords));
+  let latitude: number;
+  let longitude: number;
 
+  const latLang = useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       position => {
-        const { latitude } = position.coords;
-        const { longitude } = position.coords;
-        // const coords = { lat: latitude, lng: longitude };
-
-        // dispatch(locatePosition(coords));
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
       },
       () => {
+        // FIXME
+        // Add Error Component !!
+        const SanandajCoords = { latitude: 35.3119, longitude: 46.9964 };
+
+        latitude = SanandajCoords.latitude;
+        longitude = SanandajCoords.longitude;
+
         console.log('Could not get your position');
       }
     );
+  }, []);
+
+  const CurrentLocationButtonHandler = () => {
+    dispatch(locatePosition({ lat: latitude, lng: longitude }));
+    dispatch(resetClickedLocation());
+    dispatch(saveSharedLocation());
   };
 
   return (
     <button
+      //  className={classes.button}
+
       className={`${classes['location--btn']} ${classes['button']} `}
-      onClick={menuCurrentLocationButtonClickHandler}
+      onClick={CurrentLocationButtonHandler}
     >
       <img
         src={menuCurrentLocationButton}
