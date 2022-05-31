@@ -12,6 +12,8 @@ import {
 import communereLogo from '../../assets/logos/communereLogo.svg';
 
 import classes from './SharedLocationItem.module.css';
+import { saveSharedLocation } from '../../store/slices/ShareLocationFormSlice';
+import { retrieveSelectedLocationData } from '../../store/slices/retrieveSelectedLocationDataSlice';
 
 interface SharedLocationProps {
   locationName: string;
@@ -21,7 +23,6 @@ interface SharedLocationProps {
 
 const SharedLocationItem: React.FC<SharedLocationProps> = props => {
   const sharedLocations = useAppSelector(state => state.sharedLocations);
-  console.log(sharedLocations);
   const dispatch = useDispatch();
 
   const locationListItemClickHandler = (
@@ -35,8 +36,11 @@ const SharedLocationItem: React.FC<SharedLocationProps> = props => {
       location => location.id === locationId
     );
 
+    dispatch(retrieveSelectedLocationData(clickedLocation));
     dispatch(locatePosition(clickedLocation.locationLatLang));
     dispatch(resetClickedLocation());
+    dispatch(saveSharedLocation());
+
     dispatch(sharedLocationClicked(clickedLocation.id));
     dispatch(openPopup());
   };

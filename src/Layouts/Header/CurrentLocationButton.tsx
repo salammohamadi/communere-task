@@ -28,7 +28,7 @@ const CurrentLocationButton: React.FC = () => {
         latitude = SanandajCoords.latitude;
         longitude = SanandajCoords.longitude;
 
-        console.log('Could not get your position');
+        console.log(`can't get your position`);
       }
     );
   }, []);

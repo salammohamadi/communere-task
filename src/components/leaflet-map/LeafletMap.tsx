@@ -24,7 +24,10 @@ import {
 } from '../../store/slices/leafletMapSlice';
 
 import './leaflet.css';
-import { sharedLocationSaved } from '../../store/slices/ShareLocationFormSlice';
+import {
+  resetSelectedLocationData,
+  retrieveSelectedLocationData,
+} from '../../store/slices/retrieveSelectedLocationDataSlice';
 
 const newMarker = new Icon({
   iconUrl: 'https://unpkg.com/leaflet@1.8.0/dist/images/marker-icon-2x.png',
@@ -37,6 +40,15 @@ interface LeafletMapProps {
 
 const LeafletMap: React.FC<LeafletMapProps> = props => {
   const popupIsOpen = useAppSelector(state => state.leaflet.popupIsOpen);
+
+  const sharedLocationIsSaved = useAppSelector(
+    state => state.selectedLocation.locationSaved
+  );
+
+  const sharedLocations = useAppSelector(state => state.sharedLocations);
+
+  const selectedLocation = useAppSelector(state => state.selectedLocation);
+
   const coords = useAppSelector(state => state.leaflet);
   const dispatch = useDispatch();
 
@@ -46,7 +58,7 @@ const LeafletMap: React.FC<LeafletMapProps> = props => {
 
     useMapEvent('click', e => {
       const latLang = e.latlng;
-      dispatch(sharedLocationSaved());
+      dispatch(resetSelectedLocationData());
       dispatch(locatePosition(latLang));
       dispatch(toggleModal());
       map.setView([latLang.lat, latLang.lng], 15);
@@ -70,7 +82,20 @@ const LeafletMap: React.FC<LeafletMapProps> = props => {
         icon={newMarker}
         draggable={!props.panel}
         eventHandlers={{
-          click: () => {
+          click: e => {
+            !sharedLocationIsSaved &&
+              sharedLocations.forEach(location => {
+                if (
+                  location.locationLatLang.lat === e.latlng.lat &&
+                  location.locationLatLang.lng === e.latlng.lng
+                ) {
+                  dispatch(retrieveSelectedLocationData(location));
+                }
+              });
+
+            sharedLocationIsSaved &&
+              dispatch(retrieveSelectedLocationData(selectedLocation));
+
             dispatch(togglePopup());
           },
         }}

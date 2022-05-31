@@ -4,8 +4,10 @@ import modalReducer from './slices/modalPanelSlice';
 import sharedLocationsReducer from './slices/SharedLocationSlice';
 import sidebarReducer from './slices/ShowSidebarSlice';
 import formReducer from './slices/ShareLocationFormSlice';
+import retrieveFormDataReducer from './slices/retrieveSelectedLocationDataSlice';
 import inputReducer from './slices/InitialInputSlice';
-import editSharedLocation from './slices/retrieveFormDataSlice';
+import selectedLocationReducer from './slices/retrieveSelectedLocationDataSlice';
+import popupReducer from './slices/popupSlice';
 
 const store = configureStore({
   reducer: {
@@ -14,8 +16,10 @@ const store = configureStore({
     sharedLocations: sharedLocationsReducer,
     sidebar: sidebarReducer,
     form: formReducer,
+    formDate: retrieveFormDataReducer,
     input: inputReducer,
-    selectedLocation: editSharedLocation,
+    selectedLocation: selectedLocationReducer,
+    popup: popupReducer,
   },
 });
 

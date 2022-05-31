@@ -30,7 +30,7 @@ const CurrentLocationMenuButton: React.FC = () => {
         latitude = SanandajCoords.latitude;
         longitude = SanandajCoords.longitude;
 
-        console.log('Could not get your position');
+        console.log(`Can't get your position`);
       }
     );
   }, []);
@@ -43,8 +43,6 @@ const CurrentLocationMenuButton: React.FC = () => {
 
   return (
     <button
-      //  className={classes.button}
-
       className={`${classes['location--btn']} ${classes['button']} `}
       onClick={CurrentLocationButtonHandler}
     >
