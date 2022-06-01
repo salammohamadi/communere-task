@@ -55,7 +55,6 @@ export const SharedLocationSlice = createSlice({
 
 export const {
   addNewSharedLocation,
-
   resetClickedLocation,
   sharedLocationClicked,
   deleteSharedLocation,

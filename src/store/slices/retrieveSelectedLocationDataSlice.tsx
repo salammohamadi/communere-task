@@ -51,6 +51,7 @@ export const SelectedLocationDataSlice = createSlice({
         lat: action.payload.locationLat,
         lng: action.payload.locationLng,
       };
+      state.locationId = action.payload.locationId;
       state.locationLogo = action.payload.locationLogo;
     },
 

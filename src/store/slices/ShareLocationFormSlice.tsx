@@ -33,7 +33,6 @@ export const ShareLocationFormSlice = createSlice({
 
 export const {
   editButtonClicked,
-  // cancelButtonClicked,
   saveSharedLocation,
   cancelSavingSharedLocation,
 } = ShareLocationFormSlice.actions;
